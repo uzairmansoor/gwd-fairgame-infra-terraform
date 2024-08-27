@@ -1,0 +1,14 @@
+__pycache__
+.env
+script-org--celery.sh.org
+code/__pycache__/*
+log-flaskapp.txt
+terraform.tfstate.d/
+.terraform/
+terraform.tfvars
+terraform.tfvars.json
+.DS_store
+ssh_public.key
+errored.tfstate
+terraform.tfstate
+id_rsa
