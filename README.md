@@ -20,29 +20,29 @@ First, clone this repository to your local machine:
 
 Change to the 'aws/common' directory where the Terraform configuration is located:
 
-*cd aws/common*
+    cd aws/common
 
 3. Initialize Terraform
 
 Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend:
 
-*terraform init*
+    terraform init
 
 4. Select a Workspace
 
 List the available workspaces:
 
-*terraform workspace list*
+    terraform workspace list
 
 5. Select the workspace you want to deploy (e.g., dev):
 
-*terraform workspace select dev*
+    terraform workspace select dev
 
 6. Apply the Configuration
 
 Apply the Terraform configuration to create the infrastructure:
 
-*terraform apply*
+    terraform apply
 
 ## Resources
 
