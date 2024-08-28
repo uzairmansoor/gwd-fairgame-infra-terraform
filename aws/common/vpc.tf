@@ -2,9 +2,6 @@
 # Virtual Private Cloud VPC
 ##########################################
 
-
-# VPC (Virtual Private Cloud)
-# --------------------------------------
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr[terraform.workspace]
   enable_dns_hostnames = true

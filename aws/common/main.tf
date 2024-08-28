@@ -1,6 +1,5 @@
 provider "aws" {
   region = "eu-west-2"
-  # profile = "xybion-dev"
   default_tags {
     tags = {
       ManagedBy   = "terraform"

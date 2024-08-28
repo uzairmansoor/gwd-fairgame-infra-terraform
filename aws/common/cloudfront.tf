@@ -41,14 +41,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     target_origin_id = local.s3_origin_id
     cache_policy_id            = "b2884449-e4de-46a7-ac36-70bc7f1ddd6d"
     response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03"
-    # forwarded_values {
-    #   query_string = false
-
-    #   cookies {
-    #     forward = "none"
-    #   }
-    # }
-
     viewer_protocol_policy = "allow-all"
     min_ttl                = 0
     default_ttl            = 3600

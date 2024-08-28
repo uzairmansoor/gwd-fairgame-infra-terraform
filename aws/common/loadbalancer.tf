@@ -1,3 +1,7 @@
+##########################################
+# ALB (Application Load Balancer)
+##########################################
+
 resource "aws_security_group" "lb_security_group" {
   name_prefix = "${var.project}-${terraform.workspace}-lb-security-group"
   description = "Security Group for the Load Balancer"
