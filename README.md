@@ -14,7 +14,7 @@ This repository contains Terraform configurations for managing AWS infrastructur
 
 First, clone this repository to your local machine:
 
-    *git clone <repository-url>*
+    git clone https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git
 
 2. Navigate to the Directory
 
