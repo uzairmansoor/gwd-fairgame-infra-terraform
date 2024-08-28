@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = "eu-west-2"
   # profile = "xybion-dev"
   default_tags {
     tags = {
@@ -19,10 +19,10 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "gwd-fairgame-760669228469-eu-west-1"
+    bucket         = "gwd-fairgame-760669228469-eu-west-2"
     key            = "common/terraform.tfstate"
-    region         = "eu-west-1"
-    dynamodb_table = "gwd-fairgame-terraform-common-state-lock"
+    region         = "eu-west-2"
+    dynamodb_table = "gwd-fairgame-terraform-state-lock"
   }
 }
 

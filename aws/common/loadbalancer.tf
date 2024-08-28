@@ -37,7 +37,7 @@ resource "aws_lb" "application_load_balancer" {
   name               = "${var.project}-${terraform.workspace}-alb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = module.story_gen_public_subnets.ids
+  subnets            = module.public_subnets.ids
   security_groups    = [aws_security_group.lb_security_group.id]
   idle_timeout       =  3600
   # client_keep_alive  =  3600

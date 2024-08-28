@@ -29,6 +29,7 @@ module "public_subnets" {
   source          = "./modules/aws_vpc_public_subnets"
   vpc_id          = aws_vpc.vpc.id
   gateway_id      = aws_internet_gateway.gateway.id
+  project         = var.project
   environment     = terraform.workspace
   public_subnet_1 = var.public_subnet_1[terraform.workspace]
   public_subnet_2 = var.public_subnet_2[terraform.workspace]
@@ -56,6 +57,7 @@ module "private_subnets" {
   source           = "./modules/aws_vpc_private_subnets"
   vpc_id           = aws_vpc.vpc.id
   environment      = terraform.workspace
+  project         = var.project
   private_subnet_1 = var.private_subnet_1[terraform.workspace]
   private_subnet_2 = var.private_subnet_2[terraform.workspace]
   zone_subnet_1    = var.zone_subnet_1

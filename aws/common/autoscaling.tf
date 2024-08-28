@@ -28,10 +28,10 @@ resource "aws_launch_template" "launch_template" {
       volume_size = 20
     }
   }
-  image_id = "ami-04a81a99f5ec58529"
+  image_id = "ami-01ec84b284795cbc7"
   instance_initiated_shutdown_behavior = "terminate"
   instance_type = "t2.micro"
-  key_name = "story-gen-nonprod-us-east-1-856475736891"
+  key_name = "${var.project}-${terraform.workspace}-${var.location}-${var.account_id}"
   monitoring {
     enabled = true
   }
@@ -45,25 +45,24 @@ resource "aws_launch_template" "launch_template" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = "${terraform.workspace}-story-gen-launch-template"
+      Name = "${var.project}-${terraform.workspace}-launch-template"
     }
   }
 }
 
 resource "aws_autoscaling_group" "autoscaling_group" {
     name                      = "${var.project}-${terraform.workspace}-autoscaling-group"
-    max_size                  = 1 #8
+    max_size                  = 1
     min_size                  = 1
     health_check_grace_period = 300
-    # health_check_type         = "ELB"
     desired_capacity          = 1
     force_delete              = true
-    vpc_zone_identifier       = module.story_gen_public_subnets.ids  # Assuming these are your subnet IDs
-    target_group_arns         = [aws_lb_target_group.story_gen_target_group.arn]
+    vpc_zone_identifier       = module.public_subnets.ids  # Assuming these are your subnet IDs
+    target_group_arns         = [aws_lb_target_group.lb_target_group.arn]
     warm_pool {
     pool_state                  = "Stopped"
-    min_size                    = 0 #1
-    max_group_prepared_capacity = 0 #8
+    min_size                    = 0
+    max_group_prepared_capacity = 0
     instance_reuse_policy {
       reuse_on_scale_in = true
     }

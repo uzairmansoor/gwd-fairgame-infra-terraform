@@ -3,6 +3,10 @@ variable "environment" {
   description = "Name of the environment, quality, stage, nonprod, production"
 }
 
+variable "project" {
+  type        = string
+  description = "Project Name"
+}
 variable "vpc_id" {
   type = string
 }

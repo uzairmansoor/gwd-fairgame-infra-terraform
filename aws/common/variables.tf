@@ -17,7 +17,7 @@ variable "project" {
 variable "location" {
   type        = string
   description = "Amazon Region Name"
-  default     = "eu-west-1"
+  default     = "eu-west-2"
 }
 
 ##########################################
@@ -47,7 +47,7 @@ variable "public_subnet_1" {
 variable "zone_subnet_1" {
   type        = string
   description = "zone subnet 1"
-  default     = "eu-west-1a"
+  default     = "eu-west-2a"
 }
 
 variable "public_subnet_2" {
@@ -63,7 +63,7 @@ variable "public_subnet_2" {
 variable "zone_subnet_2" {
   type        = string
   description = "zone subnet 2"
-  default     = "eu-west-1b"
+  default     = "eu-west-2b"
 }
 
 variable "private_subnet_1" {
@@ -101,3 +101,50 @@ variable "lb_listener_protocol" {
   description = "Protocol to access the backend"
   default     = "HTTP"
 }
+
+##########################################
+# S3 (Simple Storage Service)
+##########################################
+
+variable "bucket_name" {
+  type        = string
+  description = "bucket Name"
+  default     = "frontend"
+}
+variable "bucket_acl" {
+  type        = string
+  description = "value for bucket Acl"
+  default     = "private"
+}
+
+variable "bucket_versioning" {
+  type        = string
+  description = "value for the bucket versioning"
+  default     = "Enabled"
+}
+
+##########################################
+# CloudFront
+##########################################
+
+# variable "bucket_domain" {
+#   type        = string
+#   description = "bucket domain name"
+# }
+# variable "bucket_log" {
+#   type        = string
+#   description = "bucket name for the logging"
+# }
+
+# variable "bucket_id" {
+#   type        = string
+#   description = "Id of bucket"
+# }
+# variable "bucketArn" {
+#   type        = string
+#   description = "Arn of bucket"
+# }
+# variable "cloudfrontArn" {
+#   type        = string
+#   description = "Arn of cloufrontArn"
+# }

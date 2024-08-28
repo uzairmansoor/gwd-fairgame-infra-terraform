@@ -3,6 +3,11 @@ variable "vpc_id" {
   type = string
 }
 
+variable "project" {
+  type        = string
+  description = "Project Name"
+}
+
 variable "private_subnet_1" {
   type        = string
   description = "private-1"
