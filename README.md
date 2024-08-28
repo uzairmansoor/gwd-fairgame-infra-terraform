@@ -5,6 +5,7 @@ This repository contains Terraform configurations for managing AWS infrastructur
 ## Prerequisites
 
 •   Terraform: Version >= 1.8.0, < 2.0.0
+
 •   AWS CLI: Configured with appropriate IAM permissions
 
 ## Setup Instructions
@@ -46,12 +47,15 @@ Apply the Terraform configuration to create the infrastructure:
 ## Resources
 
 •   EC2 Key Pair: A key pair will be created for each workspace.
+
 •   S3 Bucket: An S3 bucket will be created using the name specified in main.tf.
+
 •   DynamoDB Table: A DynamoDB table with a sort key named LockID will be created to manage state locking.
 
 ## Notes
 
 •   Ensure that the S3 bucket name specified in the configuration is unique within the AWS region.
+
 •   Ensure that the DynamoDB table is properly configured for state locking.
 
 ## Troubleshooting
