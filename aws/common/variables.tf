@@ -85,3 +85,19 @@ variable "private_subnet_2" {
     prod = "10.6.4.0/24"
   }
 }
+
+##########################################
+# Application Load Balancer
+##########################################
+
+variable "lb_target_group_port" {
+  type        = number
+  description = "Port to access the backend"
+  default     = 5200
+}
+
+variable "lb_listener_protocol" {
+  type        = string
+  description = "Protocol to access the backend"
+  default     = "HTTP"
+}
