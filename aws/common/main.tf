@@ -1,3 +1,15 @@
+provider "aws" {
+  region = "eu-west-1"
+  # profile = "xybion-dev"
+  default_tags {
+    tags = {
+      ManagedBy   = "terraform"
+      Project     = "gwd-fairgame"
+      Environment = "${terraform.workspace}"
+    }
+  }
+}
+
 terraform {
   required_version = ">= 1.8.0, < 2.0.0"
   required_providers {
@@ -7,20 +19,13 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "gwd-fairgame-760669228469-eu-west-1"
-    key            = "common/terraform.tfstate"
-    region         = "us-east-1"
+    # bucket         = "gwd-fairgame-355986150263-eu-west-1"
+    # key            = "common/terraform.tfstate"
+    region         = "eu-west-1"
     dynamodb_table = "gwd-fairgame-terraform-common-state-lock"
   }
 }
 
-provider "aws" {
-  region = "eu-west-1"
-  default_tags {
-    tags = {
-      ManagedBy   = "terraform"
-      Project     = "gwd-fairgame"
-      Environment = "${terraform.workspace}"
-    }
-  }
-}
+# module "vpc" {
+#   source    = "./vpc"
+# }
