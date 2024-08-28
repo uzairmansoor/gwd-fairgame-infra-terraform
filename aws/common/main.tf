@@ -25,7 +25,3 @@ terraform {
     dynamodb_table = "gwd-fairgame-terraform-state-lock"
   }
 }
-
-# module "vpc" {
-#   source    = "./vpc"
-# }
