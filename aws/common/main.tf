@@ -19,8 +19,8 @@ terraform {
     }
   }
   backend "s3" {
-    # bucket         = "gwd-fairgame-355986150263-eu-west-1"
-    # key            = "common/terraform.tfstate"
+    bucket         = "gwd-fairgame-760669228469-eu-west-1"
+    key            = "common/terraform.tfstate"
     region         = "eu-west-1"
     dynamodb_table = "gwd-fairgame-terraform-common-state-lock"
   }

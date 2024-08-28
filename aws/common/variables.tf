@@ -5,7 +5,7 @@
 variable "account_id" {
   type        = number
   description = "AWS Account ID"
-  default     = 355986150263 #760669228469
+  default     = 760669228469 #355986150263 #760669228469
 }
 
 variable "project" {
