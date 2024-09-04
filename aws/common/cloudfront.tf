@@ -16,7 +16,7 @@ resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name              = aws_s3_bucket.s3_bucket.bucket_regional_domain_name 
+    domain_name              = aws_s3_bucket.frontend_s3_bucket.bucket_regional_domain_name 
     origin_access_control_id = aws_cloudfront_origin_access_control.cloudfront_s3_oac.id
     origin_id                = local.s3_origin_id
   }
@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   
   #logging_config = {
     #include_cookies = false
-    #bucket = aws_s3_bucket.s3_bucket.name
+    #bucket = aws_s3_bucket.frontend_s3_bucket.name
    # prefix = "cloudfront"
   #}
 
@@ -64,14 +64,14 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 }
 
 resource "aws_s3_bucket_policy" "cdn-oac-bucket-policy" {
-  bucket = aws_s3_bucket.s3_bucket.id
+  bucket = aws_s3_bucket.frontend_s3_bucket.id
   policy = data.aws_iam_policy_document.s3_bucket_policy.json
 }
 
 data "aws_iam_policy_document" "s3_bucket_policy" {
   statement {
     actions = [ "s3:GetObject" ]
-    resources = [ "${aws_s3_bucket.s3_bucket.arn}/*"]
+    resources = [ "${aws_s3_bucket.frontend_s3_bucket.arn}/*"]
     principals {
       type = "Service"
       identifiers = ["cloudfront.amazonaws.com"]

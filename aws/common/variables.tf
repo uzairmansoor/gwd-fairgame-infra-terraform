@@ -148,3 +148,37 @@ variable "bucket_versioning" {
 #   type        = string
 #   description = "Arn of cloufrontArn"
 # }
+
+##########################################
+# Code Pipeline
+##########################################
+
+# variable "codebuildProjectName" {
+#   type        = string
+#   description = "Name of codebuild project"
+# }
+# variable "codepipelineRole" {
+#   type        = string
+#   description = "Name of codebuild project"
+# }
+# variable "bitbucketArn" {
+#   type        = string
+#   description = "Arn of the code starconnection for bit bucket"
+# }
+# variable "s3Artifactbucket" {
+#   type        = string
+#   description = "Name of s3 bucket to store artifacts"
+# }
+# variable "prodBucketID" {
+#   type        = string
+#   description = "Name of s3 bucket for deployment"
+# }
+variable "bitbucketRepo" {
+  type        = string
+  description = "Name of bitbucket repo for deployment"
+  default     = "fairgame-registration-gateway"
+}
+# variable "codebuildRole" {
+#   type        = string
+#   description = "The ARN of code build role"
+# }
