@@ -4,9 +4,11 @@
 
 resource "aws_s3_bucket" "frontend_s3_bucket" {
   bucket  = "${var.project}-${terraform.workspace}-frontend-${var.location}-${var.account_id}"
+  force_destroy = true
   tags    = {
-  project        = var.project
-  environment    = "${terraform.workspace}"
+    name          = "${var.project}-${terraform.workspace}-artifacts-${var.location}-${var.account_id}"
+    project        = var.project
+    environment    = "${terraform.workspace}"
   }
 }
 resource "aws_s3_bucket_public_access_block" "frontend_public_access" {
@@ -55,9 +57,11 @@ resource "aws_s3_bucket_website_configuration" "frontend_website_configuration" 
 
 resource "aws_s3_bucket" "artifacts_s3_bucket" {
   bucket  = "${var.project}-${terraform.workspace}-artifacts-${var.location}-${var.account_id}"
+  force_destroy = true
   tags    = {
-  project        = var.project
-  environment    = "${terraform.workspace}"
+    name          = "${var.project}-${terraform.workspace}-artifacts-${var.location}-${var.account_id}"
+    project        = var.project
+    environment    = "${terraform.workspace}"
   }
 }
 resource "aws_s3_bucket_public_access_block" "artifacts_public_access" {

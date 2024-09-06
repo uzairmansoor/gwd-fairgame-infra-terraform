@@ -173,10 +173,25 @@ variable "bucket_versioning" {
 #   type        = string
 #   description = "Name of s3 bucket for deployment"
 # }
+variable "sourceConnectionArn" {
+  type        = string
+  description = "Codestar connection ARN" #Manually create this connection and pass the ARN here as it requires manual approval.
+  default     = "arn:aws:codestar-connections:eu-west-2:760669228469:connection/28d47e66-649f-4b58-a349-153a14c8d46c"
+}
 variable "bitbucketRepo" {
   type        = string
   description = "Name of bitbucket repo for deployment"
   default     = "fairgame-registration-gateway"
+}
+variable "repoBranchName" {
+  type        = string
+  description = "Name of the repository branch"
+  default     = "develop"
+}
+variable "bitbucketAccount" {
+  type        = string
+  description = "Name of bitbucket repo for deployment"
+  default     = "gwdmedia"
 }
 # variable "codebuildRole" {
 #   type        = string
