@@ -93,7 +93,7 @@ variable "private_subnet_2" {
 variable "lb_target_group_port" {
   type        = number
   description = "Port to access the backend"
-  default     = 5200
+  default     = 3000
 }
 
 variable "lb_listener_protocol" {

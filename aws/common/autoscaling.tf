@@ -2,14 +2,17 @@
 # AWS Autoscaling Group
 ##########################################
 
-resource "aws_security_group" "security_group" {
-  name        = "${var.project}-${terraform.workspace}-security-group"
+resource "aws_security_group" "asg_security_group" {
+  name        = "${var.project}-${terraform.workspace}-lb-security-group"
   description = "Security group for EC2 instances"
   vpc_id      = aws_vpc.vpc.id
+  tags = {
+      Name = "${var.project}-${terraform.workspace}asg-security-group"
+    }
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
@@ -20,6 +23,39 @@ resource "aws_security_group" "security_group" {
   }
 }
 
+# resource "aws_vpc_security_group_ingress_rule" "asg_sg_ssh" {
+#   security_group_id = aws_security_group.asg_security_group.id
+#   cidr_ipv4         = "0.0.0.0/0"
+#   from_port         = 22
+#   ip_protocol       = "tcp"
+#   to_port           = 22
+# }
+# resource "aws_vpc_security_group_ingress_rule" "asg_sg_app" {
+#   security_group_id = aws_security_group.asg_security_group.id
+#   cidr_ipv4         = "0.0.0.0/0"
+#   from_port         = 3000
+#   ip_protocol       = "tcp"
+#   to_port           = 3000
+# }
+# resource "aws_vpc_security_group_ingress_rule" "asg_sg_http" {
+#   security_group_id = aws_security_group.asg_security_group.id
+#   cidr_ipv4         = "0.0.0.0/0"
+#   from_port         = 80
+#   ip_protocol       = "tcp"
+#   to_port           = 80
+# }
+# resource "aws_vpc_security_group_ingress_rule" "asg_sg_https" {
+#   security_group_id = aws_security_group.asg_security_group.id
+#   cidr_ipv4         = "0.0.0.0/0"
+#   from_port         = 443
+#   ip_protocol       = "tcp"
+#   to_port           = 443
+# }
+# resource "aws_vpc_security_group_egress_rule" "asg_security_group_egress" {
+#   security_group_id = aws_security_group.asg_security_group.id
+#   cidr_ipv4         = "0.0.0.0/0"
+#   ip_protocol       = "-1" # semantically equivalent to all ports
+# }
 resource "aws_launch_template" "launch_template" {
   name = "${var.project}-${terraform.workspace}-launch-template"
   block_device_mappings {
@@ -31,17 +67,21 @@ resource "aws_launch_template" "launch_template" {
   image_id = "ami-01ec84b284795cbc7"
   instance_initiated_shutdown_behavior = "terminate"
   instance_type = "t2.micro"
+  iam_instance_profile {
+    name = "gwd-fairgame-dev-manual-ec2-role"
+  }
   key_name = "${var.project}-${terraform.workspace}-${var.location}-${var.account_id}"
   monitoring {
     enabled = true
   }
-  network_interfaces {
-    associate_public_ip_address = true
-    security_groups = [aws_security_group.security_group.id]
-  }
+  # network_interfaces {
+  #   associate_public_ip_address = true
+  #   security_groups = [aws_security_group.asg_security_group.id]
+  # }
   placement {
     availability_zone = var.zone_subnet_1
   }
+  user_data = filebase64("ec2_user_data.sh")
   tag_specifications {
     resource_type = "instance"
     tags = {
