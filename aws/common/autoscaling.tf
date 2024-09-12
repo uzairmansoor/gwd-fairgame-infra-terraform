@@ -113,7 +113,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
     }
     tag {
         key                 = "Name"
-        value               = "${var.project}-${terraform.workspace}-autoscaling-group"
+        value               = "${var.project}-${terraform.workspace}-backend"
         propagate_at_launch = true
     }
 }

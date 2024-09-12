@@ -193,7 +193,13 @@ variable "bitbucketAccount" {
   description = "Name of bitbucket repo for deployment"
   default     = "gwdmedia"
 }
-# variable "codebuildRole" {
-#   type        = string
-#   description = "The ARN of code build role"
-# }
+variable "bitbucketBackendRepo" {
+  type        = string
+  description = "Name of bitbucket repo for backend deployment"
+  default     = "fairgame-backend"
+}
+variable "repoBranchBackendName" {
+  type        = string
+  description = "Name of the repository branch"
+  default     = "feature/develop"
+}
