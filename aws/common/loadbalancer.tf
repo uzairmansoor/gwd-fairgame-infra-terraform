@@ -28,8 +28,8 @@ resource "aws_lb_target_group" "lb_target_group" {
   protocol = "HTTP"
   vpc_id = aws_vpc.vpc.id
   health_check {
-    path                = "/"
-    interval            = 300
+    path                = "/api/v1/bookings/62FVB3U8N57"
+    interval            = 30
     healthy_threshold   = 3
     unhealthy_threshold = 3
     timeout             = 10

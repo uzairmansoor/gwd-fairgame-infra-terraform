@@ -74,10 +74,10 @@ resource "aws_launch_template" "launch_template" {
   monitoring {
     enabled = true
   }
-  # network_interfaces {
-  #   associate_public_ip_address = true
-  #   security_groups = [aws_security_group.asg_security_group.id]
-  # }
+  network_interfaces {
+    associate_public_ip_address = true
+    security_groups = [aws_security_group.asg_security_group.id]
+  }
   placement {
     availability_zone = var.zone_subnet_1
   }

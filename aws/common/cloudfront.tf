@@ -46,6 +46,18 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     default_ttl            = 3600
     max_ttl                = 86400
   }
+  custom_error_response {
+    error_code            = 404
+    response_page_path     = "/index.html"
+    response_code          = 200
+    error_caching_min_ttl  = 10
+  }
+  custom_error_response {
+    error_code            = 403
+    response_page_path     = "/index.html"
+    response_code          = 200
+    error_caching_min_ttl  = 10
+  }
   viewer_certificate {
     cloudfront_default_certificate = true
   }
