@@ -186,7 +186,7 @@ variable "bitbucketRepo" {
 variable "repoBranchName" {
   type        = string
   description = "Name of the repository branch"
-  default     = "master"
+  default     = "develop"
 }
 variable "bitbucketAccount" {
   type        = string
@@ -201,5 +201,5 @@ variable "bitbucketBackendRepo" {
 variable "repoBranchBackendName" {
   type        = string
   description = "Name of the repository branch"
-  default     = "feature/develop"
+  default     = "feature/deployment"
 }

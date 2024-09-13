@@ -56,11 +56,11 @@ resource "aws_iam_role_policy_attachment" "attach_codebuild_write_cloudwatch_pol
 
 resource "aws_iam_role" "codepipeline_role" {
   name               = "${var.project}-${terraform.workspace}-codepipeline-role"
-  # tags = {
-  #   name        = "${var.project}-${terraform.workspace}-codepipeline-role"
-  #   project     = var.project
-  #   Environment = "${terraform.workspace}"
-  # }
+  tags = {
+    name        = "${var.project}-${terraform.workspace}-codepipeline-role"
+    project     = var.project
+    Environment = "${terraform.workspace}"
+  }
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -86,10 +86,10 @@ path               = "/"
 }
 
 resource "aws_iam_policy" "codepipeline_policy" {
-  name        = "${var.project}-codepipeline-policy"
+  name        = "${var.project}-${terraform.workspace}-codepipeline-policy"
   description = "Policy to allow codepipeline to execute"
   tags = {
-    name        = "${var.project}-codepipeline-policy"
+    name        = "${var.project}-${terraform.workspace}-codepipeline-policy"
     project     = var.project
     Environment = "${terraform.workspace}"
   }
@@ -265,11 +265,15 @@ data "aws_iam_policy_document" "backend_codebuild_policy_doc" {
 resource "aws_iam_role" "backend_codebuild_project_role" {
   name               = "${var.project}-${terraform.workspace}-backend-codebuild-role"
   assume_role_policy = data.aws_iam_policy_document.backend_codebuild_policy_doc.json
-  managed_policy_arns = ["arn:aws:iam::aws:policy/SecretsManagerReadWrite"]
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+    "arn:aws:iam::aws:policy/CloudWatchFullAccess",
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  ]
 }
 
 resource "aws_iam_policy" "backend_codebuild_policy" {
-  name        = "${var.project}-${terraform.workspace}-codebuild-policy"
+  name        = "${var.project}-${terraform.workspace}-backend-codebuild-policy"
   description = "A policy for codebuild to write to cloudwatch"
   policy = jsonencode({
     "Version": "2012-10-17",
@@ -281,10 +285,7 @@ resource "aws_iam_policy" "backend_codebuild_policy" {
           "logs:CreateLogGroup",
           "logs:DescribeLogStreams"
         ],
-        "Resource": [
-          "arn:aws:logs:${var.location}:${var.account_id}:log-group:/aws/codebuild/*",
-          "arn:aws:logs:${var.location}:${var.account_id}:log-group:/aws/codebuild/*:*"
-        ],
+        "Resource": ["*"],
         "Effect": "Allow"
       },
       {
@@ -322,11 +323,15 @@ resource "aws_iam_role_policy_attachment" "attach_backend_codebuild_policy" {
 
 resource "aws_iam_role" "backend_codepipeline_role" {
   name               = "${var.project}-${terraform.workspace}-backend-codepipeline-role"
-  tags = {
-    name        = "${var.project}-${terraform.workspace}-backend-codepipeline-role"
-    project     = var.project
-    Environment = "${terraform.workspace}"
-  }
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AWSCodeDeployFullAccess",
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  ]
+  # tags = {
+  #   name        = "${var.project}-${terraform.workspace}-backend-codepipeline-role"
+  #   project     = var.project
+  #   Environment = "${terraform.workspace}"
+  # }
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -337,6 +342,13 @@ resource "aws_iam_role" "backend_codepipeline_role" {
         "Service": "codepipeline.amazonaws.com"
       },
       "Effect": "Allow"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codebuild.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
     }
   ]
 }
@@ -344,10 +356,10 @@ EOF
 path               = "/"
 }
 resource "aws_iam_policy" "backend_codepipeline_policy" {
-  name        = "${var.project}-codepipeline-policy"
+  name        = "${var.project}-${terraform.workspace}-backend-codepipeline-policy"
   description = "Policy to allow codepipeline to execute"
   tags = {
-    name        = "${var.project}-codepipeline-policy"
+    name        = "${var.project}-${terraform.workspace}-backend-codepipeline-policy"
     project     = var.project
     Environment = "${terraform.workspace}"
   }
@@ -422,7 +434,7 @@ resource "aws_iam_role_policy_attachment" "backend_codepipeline_role_attach" {
 ##########################################
 
 resource "aws_codebuild_project" "backend_aws_codebuild_project" {
-  name          = "${var.project}-${terraform.workspace}-codebuild"
+  name          = "${var.project}-${terraform.workspace}-backend-codebuild"
   description   = "Codebuild for ${var.project}"
   build_timeout = "40"
   service_role  = aws_iam_role.backend_codebuild_project_role.arn
@@ -442,8 +454,8 @@ resource "aws_codebuild_project" "backend_aws_codebuild_project" {
   }
   logs_config {
     cloudwatch_logs {
-      group_name  = "${var.project}-${terraform.workspace}-codebuild-log-group"
-      stream_name = "${var.project}-${terraform.workspace}-codebuild-log-stream"
+      group_name  = "${var.project}-${terraform.workspace}-codebuild-backend-log-group"
+      stream_name = "${var.project}-${terraform.workspace}-codebuild-backend-log-stream"
     }
   }
   source {
@@ -462,7 +474,7 @@ resource "aws_codepipeline" "backend_pipeline" {
   execution_mode  = "QUEUED"
   role_arn = aws_iam_role.backend_codepipeline_role.arn
   artifact_store {
-    location = aws_s3_bucket.artifacts_s3_bucket.id
+    location = aws_s3_bucket.backend_artifacts_s3_bucket.id
     type     = "S3"
   }
   stage {
@@ -492,7 +504,7 @@ resource "aws_codepipeline" "backend_pipeline" {
       output_artifacts = ["build_output"]
       version          = "1"
       configuration = {
-        ProjectName = aws_codebuild_project.aws_codebuild_project.name
+        ProjectName = aws_codebuild_project.backend_aws_codebuild_project.name
       }
     }
   }
@@ -505,12 +517,10 @@ resource "aws_codepipeline" "backend_pipeline" {
       provider        = "CodeDeploy"
       input_artifacts = ["build_output"]
       version         = "1"
-      # configuration = {
-
-      #   OutputFileName = "CreateStackOutput.json"
-      #   StackName      = "MyStack"
-      #   TemplatePath   = "build_output::sam-templated.yaml"
-      # }
+      configuration = {
+        ApplicationName     = aws_codedeploy_app.backend_codedeploy.name
+        DeploymentGroupName = aws_codedeploy_deployment_group.backend_codedeploy_group.deployment_group_name
+      }
     }
   }
 }

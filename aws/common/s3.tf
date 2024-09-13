@@ -103,3 +103,46 @@ resource "aws_s3_bucket_website_configuration" "artifacts_website_configuration"
     key = "error.html"
   }
 }
+
+##########################################
+# Backend Artifacts S3 Bucket
+##########################################
+
+resource "aws_s3_bucket" "backend_artifacts_s3_bucket" {
+  bucket  = "${var.project}-${terraform.workspace}-be-artifacts-${var.location}-${var.account_id}"
+  force_destroy = true
+  tags    = {
+    name          = "${var.project}-${terraform.workspace}-be-artifacts-${var.location}-${var.account_id}"
+    project        = var.project
+    environment    = "${terraform.workspace}"
+  }
+}
+resource "aws_s3_bucket_public_access_block" "backend_artifacts_public_access" {
+  bucket = aws_s3_bucket.backend_artifacts_s3_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_versioning" "backend_artifacts_versioning" {
+  bucket = aws_s3_bucket.backend_artifacts_s3_bucket.id
+  versioning_configuration {
+    status = var.bucket_versioning
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "backend_artifacts_bucket_ownership" {
+  bucket = aws_s3_bucket.backend_artifacts_s3_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "backend_artifacts_bucket_acl" {
+  depends_on = [aws_s3_bucket_ownership_controls.backend_artifacts_bucket_ownership]
+
+  bucket = aws_s3_bucket.backend_artifacts_s3_bucket.id
+  acl    = var.bucket_acl 
+}

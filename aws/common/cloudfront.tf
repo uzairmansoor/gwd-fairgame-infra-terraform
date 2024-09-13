@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
-  name                              = "CloudFront S3 OAC"
+  name                              = "${var.project}-${terraform.workspace}-cloudfront-s3-oac"
   description                       = "Cloud Front S3 OAC"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
