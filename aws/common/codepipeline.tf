@@ -56,11 +56,11 @@ resource "aws_iam_role_policy_attachment" "attach_codebuild_write_cloudwatch_pol
 
 resource "aws_iam_role" "codepipeline_role" {
   name               = "${var.project}-${terraform.workspace}-codepipeline-role"
-  tags = {
-    name        = "${var.project}-${terraform.workspace}-codepipeline-role"
-    project     = var.project
-    Environment = "${terraform.workspace}"
-  }
+  # tags = {
+  #   name        = "${var.project}-${terraform.workspace}-codepipeline-role"
+  #   project     = var.project
+  #   Environment = "${terraform.workspace}"
+  # }
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -111,7 +111,8 @@ resource "aws_iam_policy" "codepipeline_policy" {
     {
         Effect = "Allow"
         Action = [
-          "codestar-connections:UseConnection"
+          "codestar-connections:UseConnection",
+          "codestar-connections:*"
         ]
         Resource = "*"
       },
@@ -268,7 +269,8 @@ resource "aws_iam_role" "backend_codebuild_project_role" {
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
     "arn:aws:iam::aws:policy/CloudWatchFullAccess",
-    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+    "arn:aws:iam::aws:policy/AdministratorAccess"
   ]
 }
 
@@ -447,9 +449,19 @@ resource "aws_codebuild_project" "backend_aws_codebuild_project" {
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
     environment_variable {
+      name  = "PROJECT"
+      type  = "PLAINTEXT"
+      value = "${var.project}"
+  }
+    environment_variable {
       name  = "ENV"
       type  = "PLAINTEXT"
       value = "${terraform.workspace}"
+  }
+    environment_variable {
+      name  = "APP_SECRET_ID"
+      type  = "SECRETS_MANAGER"
+      value = "${var.project}/${terraform.workspace}/config" #Make sure that the secret name and this value remain same
   }
   }
   logs_config {
