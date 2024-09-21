@@ -65,6 +65,10 @@ This command will deploy all the infrastructure of this project including the fo
 
 This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used as the source stage, and CodeBuild is used for the build stage. The build stage also handles the deployment to the S3 bucket.
 
+<p align="center">
+  <img src=![image](https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef) alt="Description of image" />
+</p>
+
    ![image](https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef)
 
 This is the S3 bucket where the website's front end is deployed. All the files will appear here once the CI/CD pipeline runs successfully. When we bring up the Terraform infrastructure, this bucket will be empty.
