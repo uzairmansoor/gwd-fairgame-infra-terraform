@@ -66,7 +66,7 @@ This command will deploy all the infrastructure of this project including the fo
 This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used as the source stage, and CodeBuild is used for the build stage. The build stage also handles the deployment to the S3 bucket.
 
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef />
 </p>
 <p align="center">
   <b>Frontend CodePipeline</b>
@@ -75,43 +75,70 @@ This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used
 This is the S3 bucket where the website's front end is deployed. All the files will appear here once the CI/CD pipeline runs successfully. When we bring up the Terraform infrastructure, this bucket will be empty.
 
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/a34a0b7f-9bfb-47c8-866f-e5de5f6883b9 alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/a34a0b7f-9bfb-47c8-866f-e5de5f6883b9 />
+</p>
+<p align="center">
+  <b>Frontend S3 Bucket</b>
 </p>
 
 This is the CloudFront where the frontend's S3 bucket is set as an origin. The live domain is configured in CloudFront's domain name, and CloudFront is used as the target for the live domain. The traffic flow will be as follows: first, the traffic will come to the domain, then forward to CloudFront, and finally to the S3 bucket.
 
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/71dd8142-539a-4db7-b919-8d1697e64dbf alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/71dd8142-539a-4db7-b919-8d1697e64dbf />
+</p>
+<p align="center">
+  <b>CloudFront for Frontend</b>
 </p>
 
 This is the CI/CD pipeline for the website's back-end code. "BitBucket" is used as the Source stage, “CodeBuild” is used as the Build stage, and “CodeDeploy” is used in the Deploy stage to handle deployment to EC2.
 
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/918ad10e-c696-4354-8e1f-8866500ca9bf alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/918ad10e-c696-4354-8e1f-8866500ca9bf />
 </p>
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/ab93e6b0-2f52-4746-b5fe-b80aa8a75bcf alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/ab93e6b0-2f52-4746-b5fe-b80aa8a75bcf />
+</p>
+<p align="center">
+  <b>Backend CodePipeline</b>
 </p>
 
 This is the Auto Scaling Group for the back end of the website. As the load increases, it will automatically spin up new EC2 instances and register them in the Target Group of the Application Load Balancer.
 
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/71020a3c-d974-4670-8018-bc98dff6d84b alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/71020a3c-d974-4670-8018-bc98dff6d84b />
 </p>
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/12036433-e05f-4bbc-869b-d3c61c71058d alt="Frontend CodePipeline" />
+  <b>AutoScaling Group</b>
+</p>
+
+<p align="center">
+  <img src=https://github.com/user-attachments/assets/12036433-e05f-4bbc-869b-d3c61c71058d />
 </p>
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/d8170f2c-7760-41f1-be2a-a34023104763 alt="Frontend CodePipeline" />
+  <b>AutoScaling Group Activity</b>
+</p>
+
+<p align="center">
+  <img src=https://github.com/user-attachments/assets/d8170f2c-7760-41f1-be2a-a34023104763 />
+</p>
+<p align="center">
+  <b>AutoScaling Group </b>
 </p>
 
 This is the Application Load Balancer for the website's back-end, which will distribute traffic across the underlying EC2 instances.
 
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/c76b1e64-fde6-4241-9a7c-ad50ca9bc9e2 alt="Frontend CodePipeline" />
+  <img src=https://github.com/user-attachments/assets/c76b1e64-fde6-4241-9a7c-ad50ca9bc9e2 />
 </p>
 <p align="center">
-  <img src=https://github.com/user-attachments/assets/16663ce4-5656-434c-ab74-e24e482807df alt="Frontend CodePipeline" />
+  <b>Application Load Balancer</b>
+</p>
+
+<p align="center">
+  <img src=https://github.com/user-attachments/assets/16663ce4-5656-434c-ab74-e24e482807df />
+</p>
+<p align="center">
+  <b>Target Grouo</b>
 </p>
 
 ## Notes
