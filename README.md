@@ -39,7 +39,7 @@ AWS CDK is used to develop parameterized scripts to build the necessary infrastr
  
 1. On your development machine, clone the repo.
 
-       git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
+   git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
 
 3. Change to the 'aws/common' directory where the Terraform configuration is located.
 
@@ -66,7 +66,7 @@ This command will deploy all the infrastructure of this project including the fo
 This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used as the source stage, and CodeBuild is used for the build stage. The build stage also handles the deployment to the S3 bucket.
 
 <p align="center">
-  <img src=![image](https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef) alt="Description of image" />
+  <img src=https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef alt="Description of image" />
 </p>
 
    ![image](https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef)
