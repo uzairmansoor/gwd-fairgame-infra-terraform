@@ -39,8 +39,7 @@ AWS CDK is used to develop parameterized scripts to build the necessary infrastr
  
 1. On your development machine, clone the repo.
 
-```bash
-git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
+                git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
 
 3. Change to the 'aws/common' directory where the Terraform configuration is located.
 
