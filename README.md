@@ -39,20 +39,27 @@ AWS CDK is used to develop parameterized scripts to build the necessary infrastr
  
 1. On your development machine, clone the repo.
 
-                git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
+       git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
 
 3. Change to the 'aws/common' directory where the Terraform configuration is located.
 
-    cd aws/common
+       cd aws/common
 
 5. List the available workspaces.
-    *terraform workspace list*
-6. Select the workspace you want to deploy (e.g., prod):
-    *terraform workspace select prod*
-7. Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend.
-    *terraform init*
-8. Apply the Terraform configuration to create the infrastructure.
-    *terraform apply*
+   
+       terraform workspace list
+
+7. Select the workspace you want to deploy (e.g., prod):
+
+       terraform workspace select prod
+
+9. Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend.
+
+       terraform init
+
+11. Apply the Terraform configuration to create the infrastructure.
+    
+        terraform apply
 
 This command will deploy all the infrastructure of this project including the following resources.
 
@@ -83,50 +90,6 @@ This is the Application Load Balancer for the website's back-end, which will dis
 
 ![image](https://github.com/user-attachments/assets/c76b1e64-fde6-4241-9a7c-ad50ca9bc9e2)
 ![image](https://github.com/user-attachments/assets/16663ce4-5656-434c-ab74-e24e482807df)
-
-## Setup Instructions
-
-1. Clone the Repository
-
-First, clone this repository to your local machine:
-
-    git clone https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git
-
-2. Navigate to the Directory
-
-Change to the 'aws/common' directory where the Terraform configuration is located:
-
-    cd aws/common
-
-3. Initialize Terraform
-
-Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend:
-
-    terraform init
-
-4. Select a Workspace
-
-List the available workspaces:
-
-    terraform workspace list
-
-5. Select the workspace you want to deploy (e.g., dev):
-
-    terraform workspace select dev
-
-6. Apply the Configuration
-
-Apply the Terraform configuration to create the infrastructure:
-
-    terraform apply
-
-## Resources
-
-•   EC2 Key Pair: A key pair will be created for each workspace.
-
-•   S3 Bucket: An S3 bucket will be created using the name specified in main.tf.
-
-•   DynamoDB Table: A DynamoDB table with a sort key named LockID will be created to manage state locking.
 
 ## Notes
 
