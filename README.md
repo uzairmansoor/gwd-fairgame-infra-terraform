@@ -138,7 +138,7 @@ This is the Application Load Balancer for the website's back-end, which will dis
   <img src=https://github.com/user-attachments/assets/16663ce4-5656-434c-ab74-e24e482807df />
 </p>
 <p align="center">
-  <b>Target Grouo</b>
+  <b>Target Group</b>
 </p>
 
 ## Notes
