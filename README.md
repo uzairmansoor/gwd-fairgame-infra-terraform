@@ -68,6 +68,9 @@ This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used
 <p align="center">
   <img src=https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef alt="Frontend CodePipeline" />
 </p>
+<p align="center">
+  <b>Frontend CodePipeline</b>
+</p>
 
 This is the S3 bucket where the website's front end is deployed. All the files will appear here once the CI/CD pipeline runs successfully. When we bring up the Terraform infrastructure, this bucket will be empty.
 
