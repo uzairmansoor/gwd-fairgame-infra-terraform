@@ -35,19 +35,24 @@ AWS CDK is used to develop parameterized scripts to build the necessary infrastr
 8. EC2 Instances
 9. Secrets Manager
 
-Deploying the Infrastructure  
+## Deploying the Infrastructure  
  
 1. On your development machine, clone the repo.
-    *git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)*
-2. Change to the 'aws/common' directory where the Terraform configuration is located.
+
+```bash
+git clone [{public_repository_url} ](https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git)
+
+3. Change to the 'aws/common' directory where the Terraform configuration is located.
+
     cd aws/common
-3. List the available workspaces.
+
+5. List the available workspaces.
     *terraform workspace list*
-4. Select the workspace you want to deploy (e.g., prod):
+6. Select the workspace you want to deploy (e.g., prod):
     *terraform workspace select prod*
-5. Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend.
+7. Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend.
     *terraform init*
-6. Apply the Terraform configuration to create the infrastructure.
+8. Apply the Terraform configuration to create the infrastructure.
     *terraform apply*
 
 This command will deploy all the infrastructure of this project including the following resources.
