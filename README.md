@@ -1,5 +1,7 @@
 # Terraform Infrastructure for GWD Fairgame
 
+![gwd_architecture_diag drawio](https://github.com/user-attachments/assets/5b383ba2-138b-48e2-8cf8-9bfc693d2434)
+
 This repository contains Terraform configurations for managing AWS infrastructure related to the GWD Fairgame project. The configurations include setting up EC2 key pairs, S3 buckets, and DynamoDB tables.
 
 ## Prerequisites
