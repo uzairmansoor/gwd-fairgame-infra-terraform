@@ -1,6 +1,61 @@
-# Terraform Infrastructure for GWD Fairgame
+# Automating Infrastructure with Terraform for GWD Fair game
 
 ![gwd_architecture_diag drawio](https://github.com/user-attachments/assets/5b383ba2-138b-48e2-8cf8-9bfc693d2434)
+
+Table of Contents
+1. Prerequisites
+  1.1. Create an AWS Account and IAM Admin User
+  1.2. Install AWS Command Line Interface (CLI)
+  1.3. Create AWS Resources
+    1.3.1. Key Pair
+    1.3.2. S3 Bucket
+    1.3.3. DynamoDB Table
+  1.4. Install Terraform
+2. Infrastructure Automation
+  2.1. Introduction to Terraform
+  2.2. Amazon VPC and Security Groups
+  2.3. S3 Buckets
+  2.4. CodePipelines
+    2.4.1. CodeBuild
+    2.4.2. CodeDeploy
+  2.5. CloudFront
+  2.6. IAM Roles
+  2.7. AutoScalingGroup
+  2.8. Application Load Balancer
+  2.9. EC2 Instances
+  2.10. Secrets Manager
+3. Deploying the Infrastructure
+  3.1. Clone the Repository
+  3.2. Navigate to the Terraform Configuration
+  3.3. Terraform Workspaces
+  3.4. Initialize Terraform
+  3.5. Apply Terraform Configuration
+CI/CD Pipeline for the Website Front-End
+4.1. BitBucket as Source Stage
+4.2. CodeBuild for Build Stage
+4.3. Deployment to S3 Bucket
+Website Front-End Infrastructure
+5.1. S3 Bucket Deployment
+5.2. CloudFront Configuration
+5.3. Traffic Flow (Domain, CloudFront, S3)
+CI/CD Pipeline for Website Back-End
+6.1. BitBucket as Source Stage
+6.2. CodeBuild for Build Stage
+6.3. CodeDeploy for Deployment to EC2
+Auto Scaling for Back-End
+7.1. Auto Scaling Group Setup
+7.2. EC2 Instances in Target Group
+Application Load Balancer for Back-End
+8.1. Load Distribution Across EC2 Instances
+
+## 1. Prerequisites
+
+To deploy this solution, you need to do the following:
+### 1.1  Create an AWS Account and IAM Admin User
+     [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. Then create an IAM user with full admin permissions as described in [Create an Administrator](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html) User. Log out and log back into the AWS console as this IAM admin user.
+
+
+
 
 This repository contains Terraform configurations for managing AWS infrastructure related to the GWD Fairgame project. The configurations include setting up EC2 key pairs, S3 buckets, and DynamoDB tables.
 
