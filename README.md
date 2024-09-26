@@ -21,120 +21,165 @@
   1.4. Install Terraform
   
 3. Infrastructure Automation
+   
   2.1. Introduction to Terraform
+  
   2.2. Amazon VPC and Security Groups
+  
   2.3. S3 Buckets
+  
   2.4. CodePipelines
+  
     2.4.1. CodeBuild
+    
     2.4.2. CodeDeploy
+    
   2.5. CloudFront
+  
   2.6. IAM Roles
+  
   2.7. AutoScalingGroup
+  
   2.8. Application Load Balancer
+  
   2.9. EC2 Instances
+  
   2.10. Secrets Manager
-4. Deploying the Infrastructure
+  
+3. Deploying the Infrastructure
+
   3.1. Clone the Repository
+  
   3.2. Navigate to the Terraform Configuration
+  
   3.3. Terraform Workspaces
+  
   3.4. Initialize Terraform
+  
   3.5. Apply Terraform Configuration
-CI/CD Pipeline for the Website Front-End
-4.1. BitBucket as Source Stage
-4.2. CodeBuild for Build Stage
-4.3. Deployment to S3 Bucket
-Website Front-End Infrastructure
-5.1. S3 Bucket Deployment
-5.2. CloudFront Configuration
-5.3. Traffic Flow (Domain, CloudFront, S3)
-CI/CD Pipeline for Website Back-End
-6.1. BitBucket as Source Stage
-6.2. CodeBuild for Build Stage
-6.3. CodeDeploy for Deployment to EC2
-Auto Scaling for Back-End
-7.1. Auto Scaling Group Setup
-7.2. EC2 Instances in Target Group
-Application Load Balancer for Back-End
-8.1. Load Distribution Across EC2 Instances
+
+4. CI/CD Pipeline for the Website Front-End
+
+  4.1. BitBucket as Source Stage
+
+  4.2. CodeBuild for Build Stage
+
+  4.3. Deployment to S3 Bucket
+
+5. Website Front-End Infrastructure
+
+  5.1. S3 Bucket Deployment
+
+  5.2. CloudFront Configuration
+
+  5.3. Traffic Flow (Domain, CloudFront, S3)
+
+6. CI/CD Pipeline for Website Back-End
+
+  6.1. BitBucket as Source Stage
+
+  6.2. CodeBuild for Build Stage
+
+  6.3. CodeDeploy for Deployment to EC2
+
+7. Auto Scaling for Back-End
+
+  7.1. Auto Scaling Group Setup
+
+  7.2. EC2 Instances in Target Group
+
+8. Application Load Balancer for Back-End
+
+  8.1. Load Distribution Across EC2 Instances
 
 ## 1. Prerequisites
 
 To deploy this solution, you need to do the following:
 
 ### 1.1  Create an AWS Account and IAM Admin User
- 
-[Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. Then create an IAM user with full admin permissions as described in [Create an Administrator](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html) User. Log out and log back into the AWS console as this IAM admin user.
 
-
-
-
-This repository contains Terraform configurations for managing AWS infrastructure related to the GWD Fairgame project. The configurations include setting up EC2 key pairs, S3 buckets, and DynamoDB tables.
-
-## Prerequisites
-
-To deploy this solution, you need to do the following: 
- 
-•   [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. Then create an IAM user with full admin permissions as described at [Create an Administrator](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html) User. Log out and log back into the AWS console as this IAM admin user.
+•   [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. Then create an IAM user with full admin permissions as described in [Create an Administrator](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html) User. Log out and log back into the AWS console as this IAM admin user.
 
 **NOTE:** Ensure you have two AWS accounts to proceed with this blog.
 
-**NOTE**: This entire setup may take up to 1 hour and 30 minutes.
+### 1.2  Install AWS Command Line Interface (CLI)
 
 •   Install the AWS Command Line Interface (AWS CLI) on your local development machine and create a profile for the admin user as described at [Set Up the AWS CLI](https://docs.aws.amazon.com/streams/latest/dev/setup-awscli.html). 
 
-•   Create a Key Pair named “gwd-fairgame-prod-eu-west-2-760669228469” in the AWS Account.
+### 1.3  Create AWS Resources
 
-•   Create an S3 bucket named “gwd-fairgame-760669228469-eu-west-2”.
+  1.3.1  Create a Key Pair named “gwd-fairgame-prod-eu-west-2-760669228469” in the AWS Account.
+  
+  1.3.2  Create an S3 bucket named “gwd-fairgame-760669228469-eu-west-2”.
+  
+  1.3.3  Then, create a DynamoDB table named “gwd-fairgame-terraform-state-lock”.
 
-•   Then, create a DynamoDB table named “gwd-fairgame-terraform-state-lock”.
-
-•   Install the terraform
+### 1.4  Install terraform
     
     https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
 
-## Infrastructure Automation  
+## 2. Infrastructure Automation  
  
-AWS CDK is used to develop parameterized scripts to build the necessary infrastructure. These scripts include various services required for the infrastructure setup.
- 
-1. Amazon VPC and Security Groups
-2. S3 Buckets
-3. CodePipelines (CodeBuild, CodeDeploy)
-4. CloudFront
-5. IAM Roles
-6. AutoScalingGroup
-7. Application Load Balancer
-8. EC2 Instances
-9. Secrets Manager
+### 2.1  Introduction to Terraform
 
-## Deploying the Infrastructure  
- 
-1. On your development machine, clone the repo.
+•   AWS Terraform is used to develop parameterized scripts to build the necessary infrastructure. These scripts include various services required for the infrastructure setup.
+
+Amazon VPC and Security Groups
+1. S3 Buckets
+2. CodePipelines
+3. CodeBuild
+4. CodeDeploy
+5. CloudFront
+6. IAM Roles
+7. AutoScalingGroup
+8. Application Load Balancer
+9. EC2 Instances
+10. Secrets Manager
+
+## 3. Deploying the Infrastructure  
+
+### 3.1  Clone the Repository
+
+On your development machine, clone the repo.
 
        git clone https://github.com/uzairmansoor/gwd-fairgame-infra-terraform.git
 
-3. Change to the 'aws/common' directory where the Terraform configuration is located.
+### 3.2  Navigate to the Terraform Configuration
+
+Change to the 'aws/common' directory where the Terraform configuration is located.
 
        cd aws/common
 
-5. List the available workspaces.
+### 3.3  Terraform Workspaces
+
+List the available workspaces.
    
        terraform workspace list
 
-7. Select the workspace you want to deploy (e.g., prod):
+Select the workspace you want to deploy (e.g., prod):
 
        terraform workspace select prod
 
-9. Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend.
+### 3.4  Initialize Terraform
+
+Initialize the Terraform configuration. This will download the necessary provider plugins and set up the backend.
 
        terraform init
 
-11. Apply the Terraform configuration to create the infrastructure.
+### 3.5  Apply Terraform Configuration
+
+Apply the Terraform configuration to create the infrastructure.
     
         terraform apply
 
 This command will deploy all the infrastructure of this project including the following resources.
 
+## 4. CI/CD Pipeline for the Website Front-End
+
 This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used as the source stage, and CodeBuild is used for the build stage. The build stage also handles the deployment to the S3 bucket.
+
+When the user pushes code to the "master" branch of the front-end repository, CodePipeline will automatically detect it and start running. In the build stage, it will build the application and deploy 
+it to the specified S3 bucket.
 
 <p align="center">
   <img src=https://github.com/user-attachments/assets/8b23e5e6-7c91-4d8e-9e57-460914167fef />
@@ -142,6 +187,8 @@ This is the CI/CD pipeline for the website's front-end code. "Bitbucket" is used
 <p align="center">
   <b>Frontend CodePipeline</b>
 </p>
+
+## 5. Website Front-End Infrastructure
 
 This is the S3 bucket where the website's front end is deployed. All the files will appear here once the CI/CD pipeline runs successfully. When we bring up the Terraform infrastructure, this bucket will be empty.
 
@@ -161,7 +208,11 @@ This is the CloudFront where the frontend's S3 bucket is set as an origin. The l
   <b>CloudFront for Frontend</b>
 </p>
 
+## 6. CI/CD Pipeline for the Website Back-End
+
 This is the CI/CD pipeline for the website's back-end code. "BitBucket" is used as the Source stage, “CodeBuild” is used as the Build stage, and “CodeDeploy” is used in the Deploy stage to handle deployment to EC2.
+
+As soon as the code is pushed to the "master" branch of the back-end repository, the CI/CD pipeline will automatically run. In the Source stage, it will fetch the code from the Bitbucket repository, then build the application in the Build stage, and finally, in the Deploy stage, it will deploy the backend to the specified EC2 instances.
 
 <p align="center">
   <img src=https://github.com/user-attachments/assets/918ad10e-c696-4354-8e1f-8866500ca9bf />
@@ -172,6 +223,8 @@ This is the CI/CD pipeline for the website's back-end code. "BitBucket" is used 
 <p align="center">
   <b>Backend CodePipeline</b>
 </p>
+
+## 7. Auto Scaling for Back-End
 
 This is the Auto Scaling Group for the back end of the website. As the load increases, it will automatically spin up new EC2 instances and register them in the Target Group of the Application Load Balancer.
 
@@ -195,6 +248,8 @@ This is the Auto Scaling Group for the back end of the website. As the load incr
 <p align="center">
   <b>AutoScaling Group </b>
 </p>
+
+## 8. Application Load Balancer for Back-End
 
 This is the Application Load Balancer for the website's back-end, which will distribute traffic across the underlying EC2 instances.
 
