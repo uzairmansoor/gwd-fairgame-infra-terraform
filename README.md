@@ -108,11 +108,11 @@ To deploy this solution, you need to do the following:
 
 ### 1.3  Create AWS Resources
 
-  1.3.1  Create a Key Pair named “gwd-fairgame-prod-eu-west-2-760669228469” in the AWS Account.
+•   Create a Key Pair named “gwd-fairgame-prod-eu-west-2-760669228469” in the AWS Account.
   
-  1.3.2  Create an S3 bucket named “gwd-fairgame-760669228469-eu-west-2”.
+•   Create an S3 bucket named “gwd-fairgame-760669228469-eu-west-2”.
   
-  1.3.3  Then, create a DynamoDB table named “gwd-fairgame-terraform-state-lock”.
+•   Then, create a DynamoDB table named “gwd-fairgame-terraform-state-lock”.
 
 ### 1.4  Install terraform
     
